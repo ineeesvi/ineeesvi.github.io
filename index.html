@@ -9,40 +9,47 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root {
-      --bg: #f5f1ec;        /* fondo */
-      --brand: #9aa8ea;     /* principal */
-      --brand-600: #8897e6; /* hover un poco más oscuro */
-      --text: #1f2937;      /* gris oscuro legible */
+      --bg: #f5f1ec;        /* beige */
+      --brand: #9aa8ea;     /* lavanda-azul */
+      --brand-600: #8897e6; /* hover */
+      --text: #1f2937;      /* gris oscuro */
     }
-    .hero-overlay { background: linear-gradient(180deg, rgba(0,0,0,.20), rgba(0,0,0,.45)); }
     body { background: var(--bg); color: var(--text); }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur border-b border-gray-200">
+  <!-- Header con fondo beige -->
+  <header class="fixed top-0 inset-x-0 z-50 border-b border-gray-200" style="background: var(--bg);">
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
       <a href="/" class="flex items-center gap-3">
         <img src="assets/logo.png" alt="By IVS" class="h-8 w-auto" onerror="this.style.display='none'">
         <span class="text-lg font-semibold tracking-tight">By IVS</span>
       </a>
       <nav class="flex items-center gap-4 text-sm">
-        <a href="#recursos" class="text-gray-700 hover:text-gray-900">Recursos</a>
-        <a href="#contacto" class="text-gray-700 hover:text-gray-900">Contacto</a>
+        <a href="#recursos" class="hover:underline">Recursos</a>
+        <a href="#contacto" class="hover:underline">Contacto</a>
       </nav>
     </div>
   </header>
   <div class="h-16"></div>
 
-  <!-- Hero -->
+  <!-- Hero sin overlay oscuro y con tu portada -->
   <section class="relative w-full overflow-hidden">
-    <!-- Si renombraste la portada, cambia esta ruta -->
-    <img src="assets/portada.png" alt="Portada" class="absolute inset-0 w-full h-full object-cover max-h-[70vh]"
-         onerror="this.src='https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1920&auto=format&fit=crop'">
-    <div class="hero-overlay absolute inset-0 max-h-[70vh]"></div>
-    <div class="relative z-10 max-w-5xl mx-auto px-4 py-20 md:py-28 text-white">
-      <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">Plantillas y guías para impulsar tus proyectos</h1>
-      <p class="mt-4 text-lg md:text-xl text-white/90 max-w-2xl">Recursos claros, prácticos y descargables — By IVS.</p>
+    <!-- Cambia a tu archivo. Si lo renombraste, deja src='assets/portada.png' -->
+    <img src="assets/portada.png" alt="Portada By IVS"
+         class="absolute inset-0 w-full h-full object-cover max-h-[70vh]"
+         onerror="this.src='assets/INES VIDAL Portada'">
+    <!-- Eliminamos la capa negra: NO hay overlay -->
+    <div class="relative z-10 max-w-5xl mx-auto px-4 py-16 md:py-24 text-white">
+      <!-- Para asegurar contraste sobre tu foto, añadimos una sombra suave al texto -->
+      <h1 class="text-4xl md:text-6xl font-extrabold leading-tight"
+          style="text-shadow: 0 2px 16px rgba(0,0,0,0.35);">
+        Plantillas y guías para impulsar tus proyectos
+      </h1>
+      <p class="mt-4 text-lg md:text-xl max-w-2xl"
+         style="color: rgba(255,255,255,0.95); text-shadow: 0 2px 12px rgba(0,0,0,0.35);">
+         Recursos claros, prácticos y descargables — By IVS.
+      </p>
       <div class="mt-8 flex flex-wrap gap-3">
         <a href="#recursos" class="px-5 py-3 rounded text-white font-medium shadow"
            style="background: var(--brand);" onmouseover="this.style.background='var(--brand-600)'" onmouseout="this.style.background='var(--brand)'">
@@ -58,7 +65,7 @@
     <div class="mb-6 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
       <div>
         <h2 class="text-2xl md:text-3xl font-bold">Recursos</h2>
-        <p class="text-gray-700 text-sm">Filtra por categoría o busca por nombre/etiquetas.</p>
+        <p class="text-sm">Filtra por categoría o busca por nombre/etiquetas.</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3 w-full md:w-auto">
         <input id="searchInput" type="text" placeholder="Buscar..." class="px-3 py-2 border rounded focus:outline-none focus:ring-2"
@@ -77,15 +84,15 @@
   </main>
 
   <!-- Contacto -->
-  <section id="contacto" class="bg-white">
+  <section id="contacto" class="bg-white/70 border-t border-gray-200">
     <div class="max-w-7xl mx-auto px-4 py-12">
       <h3 class="text-xl font-semibold mb-2">¿Sugerencias o nuevas plantillas?</h3>
-      <p class="text-gray-700">Escríbeme: contacto@tudominio.com</p>
+      <p>Escríbeme: contacto@tudominio.com</p>
     </div>
   </section>
 
   <footer class="bg-white/60 border-t border-gray-200">
-    <div class="max-w-7xl mx-auto px-4 py-6 text-sm text-gray-700">
+    <div class="max-w-7xl mx-auto px-4 py-6 text-sm">
       © <span id="year"></span> By IVS.
     </div>
   </footer>
@@ -100,8 +107,8 @@
         state.all = data.resources || [];
         renderCategories();
         applyFilters();
-      } catch (e) {
-        document.getElementById('cards').innerHTML = '<p class="text-gray-700">No se pudo cargar data/resources.json.</p>';
+      } catch {
+        document.getElementById('cards').innerHTML = '<p>No se pudo cargar data/resources.json.</p>';
       }
     }
 
@@ -146,7 +153,7 @@
             <h4 class="text-lg font-semibold">${r.title}</h4>
             ${r.format ? `<span class="px-2 py-0.5 text-xs rounded" style="background:#eef2ff;color:#4f46e5">${r.format}</span>` : ''}
           </div>
-          <p class="text-sm text-gray-700 mb-3">${r.description || ''}</p>
+          <p class="text-sm mb-3">${r.description || ''}</p>
           <div class="text-xs text-gray-600 mb-3">
             <span class="mr-2">${r.category || 'General'}</span>
             ${r.size ? `<span class="mr-2">· ${r.size}</span>` : ''}
@@ -162,7 +169,7 @@
         wrap.appendChild(card);
       });
       if (!state.filtered.length) {
-        wrap.innerHTML = '<p class="text-gray-700">No hay recursos todavía.</p>';
+        wrap.innerHTML = '<p>No hay recursos todavía.</p>';
       }
     }
 
