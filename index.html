@@ -1,1 +1,164 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>By IVS · Plantillas y Guías</title>
+  <meta name="description" content="Descarga plantillas y guías gratuitas By IVS." />
+  <link rel="icon" href="assets/logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --brand: #6d28d9; --brand-600: #5b21b6; }
+    .hero-overlay { background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.55)); }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <!-- Header -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3">
+        <img src="assets/logo.png" alt="By IVS" class="h-8 w-auto" onerror="this.style.display='none'">
+        <span class="text-lg font-semibold tracking-tight">By IVS</span>
+      </a>
+      <nav class="flex items-center gap-4 text-sm">
+        <a href="#recursos" class="text-gray-600 hover:text-gray-900">Recursos</a>
+        <a href="#contacto" class="text-gray-600 hover:text-gray-900">Contacto</a>
+      </nav>
+    </div>
+  </header>
+  <div class="h-16"></div>
 
+  <!-- Hero -->
+  <section class="relative w-full overflow-hidden">
+    <img src="assets/INES VIDAL Portada" alt="Portada" class="absolute inset-0 w-full h-full object-cover max-h-[70vh]"
+         onerror="this.src='https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1920&auto=format&fit=crop'">
+    <div class="hero-overlay absolute inset-0 max-h-[70vh]"></div>
+    <div class="relative z-10 max-w-5xl mx-auto px-4 py-20 md:py-28 text-white">
+      <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">Plantillas y guías para impulsar tus proyectos</h1>
+      <p class="mt-4 text-lg md:text-xl text-white/90 max-w-2xl">Recursos claros, prácticos y descargables — By IVS.</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="#recursos" class="px-5 py-3 bg-[var(--brand)] hover:bg-[var(--brand-600)] rounded text-white font-medium shadow">Ver recursos</a>
+      </div>
+    </div>
+    <div class="h-10"></div>
+  </section>
+
+  <!-- Recursos -->
+  <main id="recursos" class="max-w-7xl mx-auto px-4 py-12">
+    <div class="mb-6 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-bold">Recursos</h2>
+        <p class="text-gray-600 text-sm">Filtra por categoría o busca por nombre/etiquetas.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 w-full md:w-auto">
+        <input id="searchInput" type="text" placeholder="Buscar..." class="px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
+        <select id="categorySelect" class="px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
+          <option value="">Todas las categorías</option>
+        </select>
+        <select id="sortSelect" class="px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
+          <option value="newest">Más recientes</option>
+          <option value="popular">Más descargadas</option>
+          <option value="az">A-Z</option>
+        </select>
+      </div>
+    </div>
+    <div id="cards" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </main>
+
+  <!-- Contacto -->
+  <section id="contacto" class="bg-white">
+    <div class="max-w-7xl mx-auto px-4 py-12">
+      <h3 class="text-xl font-semibold mb-2">¿Sugerencias o nuevas plantillas?</h3>
+      <p class="text-gray-600">Escríbeme: contacto@tudominio.com</p>
+    </div>
+  </section>
+
+  <footer class="bg-gray-100">
+    <div class="max-w-7xl mx-auto px-4 py-6 text-sm text-gray-600">
+      © <span id="year"></span> By IVS.
+    </div>
+  </footer>
+
+  <script>
+    const state = { all: [], filtered: [] };
+
+    async function loadData() {
+      try {
+        const res = await fetch('data/resources.json', { cache: 'no-store' });
+        const data = await res.json();
+        state.all = data.resources || [];
+        renderCategories();
+        applyFilters();
+      } catch (e) {
+        document.getElementById('cards').innerHTML = '<p class="text-gray-600">No se pudo cargar data/resources.json.</p>';
+      }
+    }
+
+    function renderCategories() {
+      const select = document.getElementById('categorySelect');
+      const cats = Array.from(new Set(state.all.map(r => r.category))).filter(Boolean).sort();
+      cats.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c; opt.textContent = c;
+        select.appendChild(opt);
+      });
+    }
+
+    function applyFilters() {
+      const q = document.getElementById('searchInput').value.toLowerCase().trim();
+      const cat = document.getElementById('categorySelect').value;
+      const sort = document.getElementById('sortSelect').value;
+
+      let list = state.all.filter(r => {
+        const haystack = [r.title, r.description, ...(r.tags || [])].join(' ').toLowerCase();
+        const okQ = !q || haystack.includes(q);
+        const okC = !cat || r.category === cat;
+        return okQ && okC;
+      });
+
+      if (sort === 'newest') list.sort((a,b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+      if (sort === 'popular') list.sort((a,b) => (b.downloads||0) - (a.downloads||0));
+      if (sort === 'az') list.sort((a,b) => a.title.localeCompare(b.title));
+
+      state.filtered = list;
+      renderCards();
+    }
+
+    function renderCards() {
+      const wrap = document.getElementById('cards');
+      wrap.innerHTML = '';
+      state.filtered.forEach(r => {
+        const card = document.createElement('article');
+        card.className = 'bg-white border rounded-xl p-5 flex flex-col shadow-sm hover:shadow transition';
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-3 mb-2">
+            <h4 class="text-lg font-semibold">${r.title}</h4>
+            ${r.format ? `<span class="px-2 py-0.5 text-xs rounded bg-gray-100">${r.format}</span>` : ''}
+          </div>
+          <p class="text-sm text-gray-600 mb-3">${r.description || ''}</p>
+          <div class="text-xs text-gray-500 mb-3">
+            <span class="mr-2">${r.category || 'General'}</span>
+            ${r.size ? `<span class="mr-2">· ${r.size}</span>` : ''}
+          </div>
+          <div class="flex flex-wrap gap-2 mb-4">
+            ${(r.tags||[]).map(t=>`<span class="px-2 py-1 bg-gray-100 rounded text-xs">${t}</span>`).join('')}
+          </div>
+          <a href="${r.url}" download class="mt-auto inline-flex items-center justify-center px-3 py-2 bg-[var(--brand)] hover:bg-[var(--brand-600)] text-white rounded">Descargar</a>
+        `;
+        wrap.appendChild(card);
+      });
+      if (!state.filtered.length) {
+        wrap.innerHTML = '<p class="text-gray-600">No hay recursos todavía.</p>';
+      }
+    }
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    ['searchInput','categorySelect','sortSelect'].forEach(id=>{
+      const el = document.getElementById(id);
+      el.addEventListener('input', applyFilters);
+      el.addEventListener('change', applyFilters);
+    });
+    loadData();
+  </script>
+</body>
+</html>
