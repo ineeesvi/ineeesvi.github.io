@@ -1,0 +1,15 @@
+{
+  "resources": [
+    {
+      "title": "Ejemplo: Plantilla de Factura",
+      "description": "Formato XLSX listo para usar.",
+      "category": "Negocios",
+      "tags": ["Excel", "Facturación"],
+      "format": "XLSX",
+      "size": "45 KB",
+      "publishedAt": "2025-01-01",
+      "downloads": 0,
+      "url": "downloads/plantilla-factura.xlsx"
+    }
+  ]
+}
