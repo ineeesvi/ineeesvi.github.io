@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Portfolio · BY IVS</title>
+  <link rel="icon" href="assets/logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --bg:#f5f1ec; --brand:#9aa8ea; --brand-600:#8897e6; --text:#1f2937 }
+    body { background: var(--bg); color: var(--text); }
+  </style>
+</head>
+<body>
+  <header class="sticky top-0 inset-x-0 z-50 border-b border-gray-200" style="background: var(--bg);">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3"><img src="assets/logo.png" alt="BY IVS" class="h-10 w-auto"></a>
+      <nav class="flex items-center gap-4 text-sm">
+        <a href="sobre-mi.html" class="hover:underline">Sobre mí</a>
+        <a href="portfolio.html" class="underline">Portfolio</a>
+        <a href="recursos.html" class="hover:underline">Recursos</a>
+        <a href="contacto.html" class="hover:underline">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-6">Portfolio</h1>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Repite estas tarjetas cambiando imágenes y textos -->
+      <article class="bg-white border rounded-xl p-4 shadow-sm hover:shadow transition">
+        <img src="assets/portfolio-1.jpg" alt="Proyecto 1" class="w-full h-40 object-cover rounded mb-3" onerror="this.style.display='none'">
+        <h3 class="font-semibold">Proyecto 1</h3>
+        <p class="text-sm text-gray-700">Descripción breve del proyecto.</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="bg-white/60 border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 py-6 text-sm">© <span id="year"></span> BY IVS.</div>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
