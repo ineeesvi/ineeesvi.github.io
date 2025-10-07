@@ -8,21 +8,27 @@
   <link rel="icon" href="assets/logo.png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root { --brand: #6d28d9; --brand-600: #5b21b6; }
-    .hero-overlay { background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.55)); }
+    :root {
+      --bg: #f5f1ec;        /* fondo */
+      --brand: #9aa8ea;     /* principal */
+      --brand-600: #8897e6; /* hover un poco más oscuro */
+      --text: #1f2937;      /* gris oscuro legible */
+    }
+    .hero-overlay { background: linear-gradient(180deg, rgba(0,0,0,.20), rgba(0,0,0,.45)); }
+    body { background: var(--bg); color: var(--text); }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body>
   <!-- Header -->
-  <header class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-gray-200">
+  <header class="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
       <a href="/" class="flex items-center gap-3">
         <img src="assets/logo.png" alt="By IVS" class="h-8 w-auto" onerror="this.style.display='none'">
         <span class="text-lg font-semibold tracking-tight">By IVS</span>
       </a>
       <nav class="flex items-center gap-4 text-sm">
-        <a href="#recursos" class="text-gray-600 hover:text-gray-900">Recursos</a>
-        <a href="#contacto" class="text-gray-600 hover:text-gray-900">Contacto</a>
+        <a href="#recursos" class="text-gray-700 hover:text-gray-900">Recursos</a>
+        <a href="#contacto" class="text-gray-700 hover:text-gray-900">Contacto</a>
       </nav>
     </div>
   </header>
@@ -30,6 +36,7 @@
 
   <!-- Hero -->
   <section class="relative w-full overflow-hidden">
+    <!-- Si renombraste la portada, cambia esta ruta -->
     <img src="assets/portada.png" alt="Portada" class="absolute inset-0 w-full h-full object-cover max-h-[70vh]"
          onerror="this.src='https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1920&auto=format&fit=crop'">
     <div class="hero-overlay absolute inset-0 max-h-[70vh]"></div>
@@ -37,7 +44,10 @@
       <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">Plantillas y guías para impulsar tus proyectos</h1>
       <p class="mt-4 text-lg md:text-xl text-white/90 max-w-2xl">Recursos claros, prácticos y descargables — By IVS.</p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <a href="#recursos" class="px-5 py-3 bg-[var(--brand)] hover:bg-[var(--brand-600)] rounded text-white font-medium shadow">Ver recursos</a>
+        <a href="#recursos" class="px-5 py-3 rounded text-white font-medium shadow"
+           style="background: var(--brand);" onmouseover="this.style.background='var(--brand-600)'" onmouseout="this.style.background='var(--brand)'">
+          Ver recursos
+        </a>
       </div>
     </div>
     <div class="h-10"></div>
@@ -48,14 +58,15 @@
     <div class="mb-6 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
       <div>
         <h2 class="text-2xl md:text-3xl font-bold">Recursos</h2>
-        <p class="text-gray-600 text-sm">Filtra por categoría o busca por nombre/etiquetas.</p>
+        <p class="text-gray-700 text-sm">Filtra por categoría o busca por nombre/etiquetas.</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3 w-full md:w-auto">
-        <input id="searchInput" type="text" placeholder="Buscar..." class="px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
-        <select id="categorySelect" class="px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
+        <input id="searchInput" type="text" placeholder="Buscar..." class="px-3 py-2 border rounded focus:outline-none focus:ring-2"
+               style="--tw-ring-color: var(--brand)">
+        <select id="categorySelect" class="px-3 py-2 border rounded focus:outline-none focus:ring-2" style="--tw-ring-color: var(--brand)">
           <option value="">Todas las categorías</option>
         </select>
-        <select id="sortSelect" class="px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[var(--brand)]">
+        <select id="sortSelect" class="px-3 py-2 border rounded focus:outline-none focus:ring-2" style="--tw-ring-color: var(--brand)">
           <option value="newest">Más recientes</option>
           <option value="popular">Más descargadas</option>
           <option value="az">A-Z</option>
@@ -69,12 +80,12 @@
   <section id="contacto" class="bg-white">
     <div class="max-w-7xl mx-auto px-4 py-12">
       <h3 class="text-xl font-semibold mb-2">¿Sugerencias o nuevas plantillas?</h3>
-      <p class="text-gray-600">Escríbeme: contacto@tudominio.com</p>
+      <p class="text-gray-700">Escríbeme: contacto@tudominio.com</p>
     </div>
   </section>
 
-  <footer class="bg-gray-100">
-    <div class="max-w-7xl mx-auto px-4 py-6 text-sm text-gray-600">
+  <footer class="bg-white/60 border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 py-6 text-sm text-gray-700">
       © <span id="year"></span> By IVS.
     </div>
   </footer>
@@ -90,7 +101,7 @@
         renderCategories();
         applyFilters();
       } catch (e) {
-        document.getElementById('cards').innerHTML = '<p class="text-gray-600">No se pudo cargar data/resources.json.</p>';
+        document.getElementById('cards').innerHTML = '<p class="text-gray-700">No se pudo cargar data/resources.json.</p>';
       }
     }
 
@@ -133,22 +144,25 @@
         card.innerHTML = `
           <div class="flex items-start justify-between gap-3 mb-2">
             <h4 class="text-lg font-semibold">${r.title}</h4>
-            ${r.format ? `<span class="px-2 py-0.5 text-xs rounded bg-gray-100">${r.format}</span>` : ''}
+            ${r.format ? `<span class="px-2 py-0.5 text-xs rounded" style="background:#eef2ff;color:#4f46e5">${r.format}</span>` : ''}
           </div>
-          <p class="text-sm text-gray-600 mb-3">${r.description || ''}</p>
-          <div class="text-xs text-gray-500 mb-3">
+          <p class="text-sm text-gray-700 mb-3">${r.description || ''}</p>
+          <div class="text-xs text-gray-600 mb-3">
             <span class="mr-2">${r.category || 'General'}</span>
             ${r.size ? `<span class="mr-2">· ${r.size}</span>` : ''}
           </div>
           <div class="flex flex-wrap gap-2 mb-4">
-            ${(r.tags||[]).map(t=>`<span class="px-2 py-1 bg-gray-100 rounded text-xs">${t}</span>`).join('')}
+            ${(r.tags||[]).map(t=>`<span class="px-2 py-1 rounded text-xs" style="background:#f1f5f9">${t}</span>`).join('')}
           </div>
-          <a href="${r.url}" download class="mt-auto inline-flex items-center justify-center px-3 py-2 bg-[var(--brand)] hover:bg-[var(--brand-600)] text-white rounded">Descargar</a>
+          <a href="${r.url}" download class="mt-auto inline-flex items-center justify-center px-3 py-2 text-white rounded"
+             style="background: var(--brand);" onmouseover="this.style.background='var(--brand-600)'" onmouseout="this.style.background='var(--brand)'">
+             Descargar
+          </a>
         `;
         wrap.appendChild(card);
       });
       if (!state.filtered.length) {
-        wrap.innerHTML = '<p class="text-gray-600">No hay recursos todavía.</p>';
+        wrap.innerHTML = '<p class="text-gray-700">No hay recursos todavía.</p>';
       }
     }
 
