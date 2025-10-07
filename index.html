@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Biblioteca de Plantillas</title>
+  <meta name="description" content="Plantillas y guías gratuitas para descargar." />
+  <link rel="icon" href="favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <header class="bg-white shadow">
+    <div class="max-w-6xl mx-auto px-4 py-6 flex items-center justify-between">
+      <h1 class="text-2xl font-bold">Plantillas y Guías</h1>
+      <nav class="space-x-4">
+        <a href="#recursos" class="text-sm text-gray-600 hover:text-gray-900">Recursos</a>
+        <a href="#contacto" class="text-sm text-gray-600 hover:text-gray-900">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="max-w-6xl mx-auto px-4 py-10">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold mb-2">Descarga plantillas listas para usar</h2>
+        <p class="text-gray-600">Organizadas por categorías, con actualizaciones frecuentes.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4 mb-6">
+        <input id="searchInput" type="text" placeholder="Buscar..." class="col-span-2 md:col-span-1 px-3 py-2 border rounded">
+        <select id="categorySelect" class="px-3 py-2 border rounded">
+          <option value="">Todas las categorías</option>
+        </select>
+        <select id="sortSelect" class="px-3 py-2 border rounded">
+          <option value="newest">Más recientes</option>
+          <option value="popular">Más descargadas</option>
+          <option value="az">A-Z</option>
+        </select>
+      </div>
+
+      <div id="cards" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </section>
+
+    <section id="contacto" class="bg-white">
+      <div class="max-w-6xl mx-auto px-4 py-12">
+        <h3 class="text-xl font-semibold mb-2">¿Sugerencias o nuevas plantillas?</h3>
+        <p class="text-gray-600">Escríbenos a contacto@tudominio.com</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-gray-100">
+    <div class="max-w-6xl mx-auto px-4 py-6 text-sm text-gray-600">
+      © <span id="year"></span> Tu Marca. Todos los derechos reservados.
+    </div>
+  </footer>
+
+  <script>
+    const state = { all: [], filtered: [] };
+
+    async function loadData() {
+      const res = await fetch('data/resources.json');
+      const data = await res.json();
+      state.all = data.resources || [];
+      renderCategories();
+      applyFilters();
+    }
+
+    function renderCategories() {
+      const select = document.getElementById('categorySelect');
+      const cats = Array.from(new Set(state.all.map(r => r.category))).sort();
+      cats.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c; opt.textContent = c;
+        select.appendChild(opt);
+      });
+    }
+
+    function applyFilters() {
+      const q = document.getElementById('searchInput').value.toLowerCase().trim();
+      const cat = document.getElementById('categorySelect').value;
+      const sort = document.getElementById('sortSelect').value;
+
+      let list = state.all.filter(r => {
+        const haystack = [r.title, r.description, ...(r.tags || [])].join(' ').toLowerCase();
+        const okQ = !q || haystack.includes(q);
+        const okC = !cat || r.category === cat;
+        return okQ && okC;
+      });
+
+      if (sort === 'newest') list.sort((a,b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+      if (sort === 'popular') list.sort((a,b) => (b.downloads||0) - (a.downloads||0));
+      if (sort === 'az') list.sort((a,b) => a.title.localeCompare(b.title));
+
+      state.filtered = list;
+      renderCards();
+    }
+
+    function renderCards() {
+      const wrap = document.getElementById('cards');
+      wrap.innerHTML = '';
+      state.filtered.forEach(r => {
+        const card = document.createElement('article');
+        card.className = 'bg-white border rounded-lg p-4 flex flex-col';
+        card.innerHTML = `
+          <h4 class="text-lg font-semibold mb-1">${r.title}</h4>
+          <p class="text-sm text-gray-600 mb-3">${r.description||''}</p>
+          <div class="text-xs text-gray-500 mb-3">
+            <span class="mr-2">Categoría: ${r.category}</span>
+            ${r.size ? `<span class="mr-2">· ${r.size}</span>` : ''}
+            ${r.format ? `<span class="mr-2">· ${r.format}</span>` : ''}
+          </div>
+          <div class="flex flex-wrap gap-2 mb-4">
+            ${(r.tags||[]).map(t=>`<span class="px-2 py-1 bg-gray-100 rounded text-xs">${t}</span>`).join('')}
+          </div>
+          <a href="${r.url}" download class="mt-auto inline-flex items-center justify-center px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+            Descargar
+          </a>
+        `;
+        wrap.appendChild(card);
+      });
+      if (!state.filtered.length) {
+        wrap.innerHTML = '<p class="text-gray-600">No se encontraron recursos con esos filtros.</p>';
+      }
+    }
+
+    ['searchInput','categorySelect','sortSelect'].forEach(id=>{
+      document.getElementById(id).addEventListener('input', applyFilters);
+      document.getElementById(id).addEventListener('change', applyFilters);
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    loadData();
+  </script>
+</body>
+</html>
