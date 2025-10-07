@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Recursos · BY IVS</title>
+  <link rel="icon" href="assets/logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --bg:#f5f1ec; --brand:#9aa8ea; --brand-600:#8897e6; --text:#1f2937 }
+    body { background: var(--bg); color: var(--text); }
+  </style>
+</head>
+<body>
+  <header class="sticky top-0 inset-x-0 z-50 border-b border-gray-200" style="background: var(--bg);">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3"><img src="assets/logo.png" alt="BY IVS" class="h-10 w-auto"></a>
+      <nav class="flex items-center gap-4 text-sm">
+        <a href="sobre-mi.html" class="hover:underline">Sobre mí</a>
+        <a href="portfolio.html" class="hover:underline">Portfolio</a>
+        <a href="recursos.html" class="underline">Recursos</a>
+        <a href="contacto.html" class="hover:underline">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-6">Recursos</h1>
+    <div class="mb-6 grid grid-cols-1 md:grid-cols-3 gap-3">
+      <input id="searchInput" type="text" placeholder="Buscar..." class="px-3 py-2 border rounded focus:outline-none focus:ring-2" style="--tw-ring-color: var(--brand)">
+      <select id="categorySelect" class="px-3 py-2 border rounded focus:outline-none focus:ring-2" style="--tw-ring-color: var(--brand)">
+        <option value="">Todas las categorías</option>
+      </select>
+      <select id="sortSelect" class="px-3 py-2 border rounded focus:outline-none focus:ring-2" style="--tw-ring-color: var(--brand)">
+        <option value="newest">Más recientes</option>
+        <option value="popular">Más descargadas</option>
+        <option value="az">A-Z</option>
+      </select>
+    </div>
+    <div id="cards" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </main>
+
+  <footer class="bg-white/60 border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 py-6 text-sm">© <span id="year"></span> BY IVS.</div>
+  </footer>
+
+  <script>
+    const state = { all: [], filtered: [] };
+    async function loadData() {
+      try {
+        const res = await fetch('data/resources.json', { cache: 'no-store' });
+        const data = await res.json();
+        state.all = data.resources || [];
+        const select = document.getElementById('categorySelect');
+        Array.from(new Set(state.all.map(r => r.category))).filter(Boolean).sort()
+          .forEach(c => { const o=document.createElement('option'); o.value=c; o.textContent=c; select.appendChild(o); });
+        applyFilters();
+      } catch {
+        document.getElementById('cards').innerHTML = '<p>No se pudo cargar data/resources.json.</p>';
+      }
+    }
+    function applyFilters() {
+      const q = document.getElementById('searchInput').value.toLowerCase().trim();
+      const cat = document.getElementById('categorySelect').value;
+      const sort = document.getElementById('sortSelect').value;
+      let list = state.all.filter(r => {
+        const s = [r.title, r.description, ...(r.tags||[])].join(' ').toLowerCase();
+        return (!q || s.includes(q)) && (!cat || r.category === cat);
+      });
+      if (sort === 'newest') list.sort((a,b)=>new Date(b.publishedAt)-new Date(a.publishedAt));
+      if (sort === 'popular') list.sort((a,b)=>(b.downloads||0)-(a.downloads||0));
+      if (sort === 'az') list.sort((a,b)=>a.title.localeCompare(b.title));
+      const wrap = document.getElementById('cards');
+      wrap.innerHTML = list.length ? '' : '<p>No hay recursos todavía.</p>';
+      list.forEach(r=>{
+        const el = document.createElement('article');
+        el.className='bg-white border rounded-xl p-5 flex flex-col shadow-sm hover:shadow transition';
+        el.innerHTML = `
+          <div class="flex items-start justify-between gap-3 mb-2">
+            <h4 class="text-lg font-semibold">${r.title}</h4>
+            ${r.format?`<span class="px-2 py-0.5 text-xs rounded" style="background:#eef2ff;color:#4f46e5">${r.format}</span>`:''}
+          </div>
+          <p class="text-sm mb-3">${r.description||''}</p>
+          <div class="text-xs text-gray-600 mb-3">
+            <span class="mr-2">${r.category||'General'}</span>
+            ${r.size?`<span class="mr-2">· ${r.size}</span>`:''}
+          </div>
+          <div class="flex flex-wrap gap-2 mb-4">
+            ${(r.tags||[]).map(t=>`<span class="px-2 py-1 rounded text-xs" style="background:#f1f5f9">${t}</span>`).join('')}
+          </div>
+          <a href="${r.url}" download class="mt-auto inline-flex items-center justify-center px-3 py-2 text-white rounded"
+             style="background: var(--brand);" onmouseover="this.style.background='var(--brand-600)'" onmouseout="this.style.background='var(--brand)'">Descargar</a>
+        `;
+        wrap.appendChild(el);
+      });
+    }
+    ['searchInput','categorySelect','sortSelect'].forEach(id=>{
+      const el = document.getElementById(id); if(!el) return;
+      el.addEventListener('input', applyFilters); el.addEventListener('change', applyFilters);
+    });
+    document.getElementById('year').textContent = new Date().getFullYear();
+    loadData();
+  </script>
+</body>
+</html>
