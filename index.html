@@ -222,14 +222,6 @@
 
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Ir automáticamente a "Sobre mí" al abrir si no hay hash en la URL
-    window.addEventListener('load', () => {
-      if (!location.hash) {
-        const target = document.getElementById('sobre-mi');
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-
     ['searchInput','categorySelect','sortSelect'].forEach(id=>{
       const el = document.getElementById(id);
       if (!el) return;
