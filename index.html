@@ -39,20 +39,18 @@
   <section class="relative w-full overflow-hidden">
     <!-- Cambia a tu archivo. Si lo renombraste, deja src='assets/portada.png' -->
     <img src="assets/portada" alt="Portada BY IVS"
-         class="absolute inset-0 w-full h-full object-cover max-h-[70vh]"
-         onerror="this.src='assets/INES VIDAL Portada'">
-    <!-- Eliminamos la capa negra: NO hay overlay -->
-    <div class="relative z-10 max-w-5xl mx-auto px-4 py-16 md:py-24 text-white">
-      <!-- Para asegurar contraste sobre tu foto, añadimos una sombra suave al texto -->
+         class="absolute inset-0 w-full h-full object-cover max-h-[70vh] z-10">
+    <!-- Texto principal (sin botón) -->
+    <div class="relative z-20 max-w-5xl mx-auto px-4 py-16 md:py-24 text-white">
       <h1 class="text-4xl md:text-6xl font-extrabold leading-tight"
           style="text-shadow: 0 2px 16px rgba(0,0,0,0.35);">
         Tu espacio para aprender, crear y crecer como creadora UGC.
       </h1>
       <p class="mt-4 text-lg md:text-xl max-w-2xl"
          style="color: rgba(255,255,255,0.95); text-shadow: 0 2px 12px rgba(0,0,0,0.35);">
-         Recursos para hacer crecer tu marca personal sin complicarte BY IVS.
+         Recursos para hacer crecer tu marca personal sin complicarte - BY IVS.
       </p>
-      <div class="mt-8 flex flex-wrap gap-3">
+      </div>
         <a href="#recursos" class="px-5 py-3 rounded text-white font-medium shadow"
            style="background: var(--brand);" onmouseover="this.style.background='var(--brand-600)'" onmouseout="this.style.background='var(--brand)'">
           Ver recursos
@@ -223,8 +221,18 @@
     }
 
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Ir automáticamente a "Sobre mí" al abrir si no hay hash en la URL
+    window.addEventListener('load', () => {
+      if (!location.hash) {
+        const target = document.getElementById('sobre-mi');
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+
     ['searchInput','categorySelect','sortSelect'].forEach(id=>{
       const el = document.getElementById(id);
+      if (!el) return;
       el.addEventListener('input', applyFilters);
       el.addEventListener('change', applyFilters);
     });
