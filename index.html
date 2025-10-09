@@ -49,7 +49,7 @@
   </div>
 </header>
 <!-- Spacer exacto según el header -->
-<div style="height: 57px;"></div>
+<div id="header-spacer"></div>
 
   <!-- Hero -->
   <section class="relative w-full" style="background: var(--bg);">
@@ -129,5 +129,18 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+
+  <script>
+  function setHeaderSpacer() {
+    const header = document.querySelector('header');
+    const spacer = document.getElementById('header-spacer');
+    if (!header || !spacer) return;
+    const h = header.getBoundingClientRect().height;
+    spacer.style.height = Math.round(h) + 'px';
+  }
+  window.addEventListener('load', setHeaderSpacer);
+  window.addEventListener('resize', setHeaderSpacer);
+</script>
+  
 </body>
 </html>
