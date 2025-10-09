@@ -68,6 +68,48 @@
       Contacto
     </a>
   </div>
+  
+<!-- Carrusel de marcas justo debajo de los botones -->
+  <div class="w-full overflow-hidden">
+    <h3 class="text-center text-base md:text-lg font-semibold text-gray-800 mb-6">
+      Algunas de las marcas que han confiado en mí
+    </h3>
+
+    <div class="relative overflow-hidden">
+      <div class="flex animate-scroll gap-12 md:gap-16 items-center">
+        <!-- Logos (pon los tuyos en assets/logos/) -->
+        <img src="assets/logos/maybelline.png" alt="Maybelline NY" class="h-10 md:h-14 object-contain opacity-70 hover:opacity-100 transition flex-shrink-0" />
+        <img src="assets/logos/nala.png"  alt="Nala Spain"  class="h-10 md:h-14 object-contain opacity-70 hover:opacity-100 transition flex-shrink-0" />
+        <img src="assets/logos/biotherm.png"  alt="Biotherm"  class="h-10 md:h-14 object-contain opacity-70 hover:opacity-100 transition flex-shrink-0" />
+        <img src="assets/logos/garnier.png"   alt="Garnier"   class="h-10 md:h-14 object-contain opacity-70 hover:opacity-100 transition flex-shrink-0" />
+        <img src="assets/logos/weleda.png"    alt="Weleda"    class="h-10 md:h-14 object-contain opacity-70 hover:opacity-100 transition flex-shrink-0" />
+
+        <!-- Duplicado para loop infinito -->
+        <img src="assets/logos/maybelline.png" alt="Maybelline NY" class="h-10 md:h-14 object-contain opacity-70 hover:opacity-100 transition flex-shrink-0" />
+        <img src="assets/logos/nala.png"  alt="Nala Spain"  class="h-10 md:h-14 object-contain opacity-70 hover:opacity-100 transition flex-shrink-0" />
+        <img src="assets/logos/biotherm.png"  alt="Biotherm"  class="h-10 md:h-14 object-contain opacity-70 hover:opacity-100 transition flex-shrink-0" />
+        <img src="assets/logos/garnier.png"   alt="Garnier"   class="h-10 md:h-14 object-contain opacity-70 hover:opacity-100 transition flex-shrink-0" />
+        <img src="assets/logos/weleda.png"    alt="Weleda"    class="h-10 md:h-14 object-contain opacity-70 hover:opacity-100 transition flex-shrink-0" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CSS para la animación infinita (puede ir al final del body o en tu <style>) -->
+<style>
+  @keyframes scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-scroll {
+    animation: scroll 22s linear infinite; /* ajusta la velocidad */
+    width: max-content;
+  }
+  .animate-scroll:hover {
+    animation-play-state: paused; /* pausa al pasar el ratón */
+  }
+</style>
+  
 </div>
 </section>
 
