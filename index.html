@@ -33,16 +33,14 @@
 <body>
  <!-- Header -->
   <header class="fixed top-0 inset-x-0 z-50 border-b border-gray-200" style="background: var(--bg);">
-  <div class="max-w-7xl mx-auto px-4" style="padding-block: clamp(8px, 1.2vw, 14px);"
-       class="flex items-center justify-between">
+  <div class="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between">
     <a href="index.html" class="flex items-center gap-3">
       <div class="rounded-full bg-[#f5f1ec] border border-gray-200/60"
-           style="height: clamp(40px, 5vw, 56px); width: clamp(40px, 5vw, 56px); padding: clamp(4px, .6vw, 8px);">
+           style="height: 48px; width: 48px; padding: 6px;">
         <img src="assets/logoweb2.png" alt="BY IVS" style="height:100%; width:100%; object-fit:contain;">
         </div>
       </a>
-      <nav class="flex items-center gap-[clamp(10px,1.4vw,18px)] text-sm"
-         style="font-size: clamp(13px,1.4vw,15px);">
+      <nav class="flex items-center gap-5 text-[15px]">
       <a href="sobre-mi.html" class="hover:underline">Sobre mí</a>
       <a href="portfolio.html" class="hover:underline">Portfolio</a>
       <a href="recursos.html" class="hover:underline">Recursos</a>
@@ -50,14 +48,15 @@
     </nav>
   </div>
 </header>
-<div style="height: clamp(56px, 9vw, 84px);"></div>
+<!-- Spacer exacto según el header -->
+<div style="height: 57px;"></div>
 
   <!-- Hero -->
   <section class="relative w-full" style="background: var(--bg);">
     <div class="w-full overflow-hidden" style="background: var(--bg);">
     <img src="assets/portada1.png" alt="Portada BY IVS"
          class="w-full object-contain"
-         style="height: clamp(32vh, 48vw, 52vh); min-height: 240px; max-height: 560px; background: var(--bg);">
+         style="height: clamp(48vh, 60vw, 72vh); min-height: 360px; max-height: 760px; background: var(--bg);">
   </div>
 
     <!-- Texto + CTAs con menos padding y tipografía fluida -->
@@ -93,18 +92,16 @@
   </section>
 
   <!-- Sección independiente: marcas -->
-  <section class="w-full" style="margin-top: clamp(32px, 6vw, 60px);">
-  <div class="max-w-7xl mx-auto px-4"
-       style="padding-block: clamp(24px, 5vw, 44px);">
-    <h3 class="text-center font-semibold text-gray-800"
-        style="font-size: clamp(16px, 2.4vw, 22px); margin-bottom: clamp(16px, 3.6vw, 32px);">
+  <section class="w-full mt-4">
+  <div class="max-w-7xl mx-auto px-4 py-6 md:py-8 rounded-2xl" style="background: var(--bg);">
+    <h3 class="text-center font-semibold text-gray-800 mb-4"
+        style="font-size: clamp(16px, 2.4vw, 22px);">
       Algunas de las marcas que han confiado en mí
     </h3>
 
       <!-- Carrusel infinito -->
       <div class="relative overflow-hidden">
-       <div class="flex items-center animate-scroll"
-           style="gap: clamp(24px, 4.5vw, 56px); width: max-content;">
+      <div class="flex items-center animate-scroll" style="gap: 40px; width: max-content;">
           <!-- Logos: asegúrate de que estos archivos EXISTEN en assets/logos/ -->
           <img src="assets/garnier.png"    alt="Garnier"       class="h-10 md:h-14 object-contain flex-shrink-0 opacity-80 hover:opacity-100 transition" />
           <img src="assets/weleda.webp"     alt="Weleda"        class="h-10 md:h-14 object-contain flex-shrink-0 opacity-80 hover:opacity-100 transition" />
@@ -131,7 +128,6 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    // El resto de tu JS (loadData, filtros, etc.) puede quedarse si lo usas en otra página.
   </script>
 </body>
 </html>
