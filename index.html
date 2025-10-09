@@ -10,18 +10,10 @@
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
   <link rel="manifest" href="assets/favicon/site.webmanifest">
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  /* Tamaño y estilo de los logos del carrusel */
-.logo {
-  height: 44px;             /* ajusta a tu gusto */
-  object-fit: contain;
-  flex-shrink: 0;
-  opacity: .85;
-  transition: opacity .2s ease;
-}
-.logo:hover { opacity: 1; }
-
-/* Carrusel infinito suave (2 sets, se desplaza hasta -50%) */
+  <style>
+    :root { --bg:#f5f1ec; --brand:#9aa8ea; --brand-600:#8897e6; --text:#1f2937; }
+    body { background: var(--bg); color: var(--text); }
+ 
 @keyframes marquee {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
