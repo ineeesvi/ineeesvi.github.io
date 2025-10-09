@@ -33,64 +33,78 @@
 <body>
  <!-- Header -->
   <header class="fixed top-0 inset-x-0 z-50 border-b border-gray-200" style="background: var(--bg);">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-3">
-        <div class="h-12 w-12 rounded-full bg-[#f5f1ec] p-1.5 border border-gray-200/60">
-          <img src="assets/logoweb2.png" alt="BY IVS" class="h-full w-full object-contain" />
+  <div class="max-w-7xl mx-auto px-4" style="padding-block: clamp(8px, 1.2vw, 14px);"
+       class="flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="rounded-full bg-[#f5f1ec] border border-gray-200/60"
+           style="height: clamp(40px, 5vw, 56px); width: clamp(40px, 5vw, 56px); padding: clamp(4px, .6vw, 8px);">
+        <img src="assets/logoweb2.png" alt="BY IVS" style="height:100%; width:100%; object-fit:contain;">
         </div>
       </a>
-      <nav class="flex items-center gap-4 text-sm">
-        <a href="sobre-mi.html" class="hover:underline">Sobre mí</a>
-        <a href="portfolio.html" class="hover:underline">Portfolio</a>
-        <a href="recursos.html" class="hover:underline">Recursos</a>
-        <a href="contacto.html" class="hover:underline">Contacto</a>
-      </nav>
-    </div>
-  </header>
-  <div class="h-20"></div>
+      <nav class="flex items-center gap-[clamp(10px,1.4vw,18px)] text-sm"
+         style="font-size: clamp(13px,1.4vw,15px);">
+      <a href="sobre-mi.html" class="hover:underline">Sobre mí</a>
+      <a href="portfolio.html" class="hover:underline">Portfolio</a>
+      <a href="recursos.html" class="hover:underline">Recursos</a>
+      <a href="contacto.html" class="hover:underline">Contacto</a>
+    </nav>
+  </div>
+</header>
+<div style="height: clamp(56px, 9vw, 84px);"></div>
 
   <!-- Hero -->
   <section class="relative w-full" style="background: var(--bg);">
     <div class="w-full overflow-hidden" style="background: var(--bg);">
     <img src="assets/portada1.png" alt="Portada BY IVS"
          class="w-full object-contain"
-         style="height: clamp(36vh, 48vw, 50vh); min-height: 260px; max-height: 540px; background: var(--bg);">
+         style="height: clamp(32vh, 48vw, 52vh); min-height: 240px; max-height: 560px; background: var(--bg);">
   </div>
 
     <!-- Texto + CTAs con menos padding y tipografía fluida -->
   <div class="max-w-5xl mx-auto px-4 py-6 md:py-8 text-center">
-    <h1 class="font-extrabold leading-tight mb-3"
-        style="font-size: clamp(24px, 4vw, 48px);">
-      Ayudo a llevar tu marca a otro nivel con creatividad, compromiso y autenticidad.
-    </h1>
+  <h1 class="font-extrabold leading-tight mb-3"
+      style="font-size: clamp(22px, 4.2vw, 46px); line-height: clamp(28px, 5vw, 54px);">
+    Ayudo a llevar tu marca a otro nivel con creatividad, compromiso y autenticidad.
+  </h1>
 
-    <div class="flex justify-center items-center flex-wrap gap-3 mt-4">
-      <a href="https://ineesviugc.my.canva.site/portfolio-ines-vidal" target="_blank" rel="noopener"
-         class="inline-flex items-center justify-center rounded-full text-white font-semibold shadow"
-         style="background: var(--brand); padding: clamp(10px,1.2vw,14px) clamp(18px,2vw,22px);"
-         onmouseover="this.style.background='var(--brand-600)'" onmouseout="this.style.background='var(--brand)'">
-        Portfolio
-      </a>
-      <a href="mailto:inesvidal.ugc@gmail.com?subject=Consulta%20desde%20la%20web&body=Hola%20IVS%2C%0A%0AMe%20gustar%C3%ADa%20hablar%20contigo%20sobre..."
-         class="inline-flex items-center justify-center rounded-full text-white font-semibold shadow"
-         style="background:#1f2937; padding: clamp(10px,1.2vw,14px) clamp(18px,2vw,22px);">
-        Contacto
+  <div class="flex justify-center items-center flex-wrap gap-[clamp(8px,1vw,14px)] mt-[clamp(12px,1.5vw,18px)]">
+    <a href="https://ineesviugc.my.canva.site/portfolio-ines-vidal" target="_blank" rel="noopener"
+       class="inline-flex items-center justify-center rounded-full text-white font-semibold shadow"
+       style="
+         background: var(--brand);
+         font-size: clamp(14px, 1.6vw, 16px);
+         padding: clamp(10px,1.2vw,14px) clamp(18px,2.2vw,24px);
+       "
+       onmouseover="this.style.background='var(--brand-600)'" onmouseout="this.style.background='var(--brand)'">
+      Portfolio
+    </a>
+
+    <a href="mailto:inesvidal.ugc@gmail.com?subject=Consulta%20desde%20la%20web&body=Hola%20IVS%2C%0A%0AMe%20gustar%C3%ADa%20hablar%20contigo%20sobre..."
+       class="inline-flex items-center justify-center rounded-full text-white font-semibold shadow"
+       style="
+         background:#1f2937;
+         font-size: clamp(14px, 1.6vw, 16px);
+         padding: clamp(10px,1.2vw,14px) clamp(18px,2.2vw,24px);
+       ">
+      Contacto
         </a>
       </div>
     </div>
   </section>
 
   <!-- Sección independiente: marcas -->
-  <section class="w-full mt-16 md:mt-20">
-    <div class="max-w-7xl mx-auto px-4 py-8 md:py-10 rounded-2xl" style="background: var(--bg);">
-    <h3 class="text-center font-semibold text-gray-800 mb-6 md:mb-8"
-        style="font-size: clamp(16px, 2.2vw, 22px);">
+  <section class="w-full" style="margin-top: clamp(32px, 6vw, 60px);">
+  <div class="max-w-7xl mx-auto px-4"
+       style="padding-block: clamp(24px, 5vw, 44px);">
+    <h3 class="text-center font-semibold text-gray-800"
+        style="font-size: clamp(16px, 2.4vw, 22px); margin-bottom: clamp(16px, 3.6vw, 32px);">
       Algunas de las marcas que han confiado en mí
     </h3>
 
       <!-- Carrusel infinito -->
       <div class="relative overflow-hidden">
-        <div class="flex animate-scroll gap-10 md:gap-14 items-center">
+       <div class="flex items-center animate-scroll"
+           style="gap: clamp(24px, 4.5vw, 56px); width: max-content;">
           <!-- Logos: asegúrate de que estos archivos EXISTEN en assets/logos/ -->
           <img src="assets/garnier.png"    alt="Garnier"       class="h-10 md:h-14 object-contain flex-shrink-0 opacity-80 hover:opacity-100 transition" />
           <img src="assets/weleda.webp"     alt="Weleda"        class="h-10 md:h-14 object-contain flex-shrink-0 opacity-80 hover:opacity-100 transition" />
